@@ -1,4 +1,14 @@
 import React from "react";
+import type { Metadata } from "next";
+
+// Dynamically set the page metadata
+export const generateMetadata = (): Metadata => {
+  return {
+    title: "AI Drug Analysis Pipeline",
+    description:
+      "A machine learning pipeline designed to predict molecular properties, including drug toxicity, with high accuracy and interpretability.",
+  };
+};
 
 export default function AIDrugPipeline() {
   return (

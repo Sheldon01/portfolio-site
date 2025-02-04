@@ -1,5 +1,14 @@
 import React from "react";
 import Link from "next/link";
+import type { Metadata } from "next";
+
+// Dynamically set the page metadata
+export const generateMetadata = (): Metadata => {
+  return {
+    title: "Home | Sheldon's AI Portfolio",
+    description: "Explore Sheldon West's portfolio of cutting-edge AI and machine learning projects.",
+  };
+};
 
 export default function Home() {
   return (

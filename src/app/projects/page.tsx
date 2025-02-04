@@ -1,6 +1,15 @@
 import React from "react";
 import Link from "next/link";
+import type { Metadata } from "next";
 import ProjectCard from "@/components/ProjectCard";
+
+// Dynamically set the page metadata
+export const generateMetadata = (): Metadata => {
+  return {
+    title: "Projects | Sheldon's AI Portfolio",
+    description: "Browse through a collection of AI and machine learning projects by Sheldon West.",
+  };
+};
 
 const projects = [
   { title: "AI Drug Analysis Pipeline", slug: "ai-drug-pipeline" },
