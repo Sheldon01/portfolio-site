@@ -4,7 +4,6 @@ import ProjectCard from "@/components/ProjectCard";
 
 const projects = [
   { title: "AI Drug Analysis Pipeline", slug: "ai-drug-pipeline" },
-  { title: "Titanic Survival Prediction", slug: "titanic-survival" },
 ];
 
 export default function ProjectsPage() {
