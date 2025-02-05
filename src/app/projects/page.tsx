@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import type { Metadata } from "next";
 import ProjectCard from "@/components/ProjectCard";
+import AnimatedBackground from "@/components/AnimatedBackground"; // Import AnimatedBackground
 
 // Dynamically set the page metadata
 export const generateMetadata = (): Metadata => {
@@ -17,14 +18,20 @@ const projects = [
 
 export default function ProjectsPage() {
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4">
-      <h1 className="text-3xl font-bold mb-6">My Projects</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {projects.map((project) => (
-          <Link href={`/projects/${project.slug}`} key={project.slug}>
-            <ProjectCard title={project.title} />
-          </Link>
-        ))}
+    <div className="relative min-h-screen bg-gray-900 text-white overflow-hidden">
+      {/* Animated Background */}
+      <AnimatedBackground />
+
+      {/* Page Content */}
+      <div className="relative z-10 p-4">
+        <h1 className="text-3xl font-bold mb-6">My Projects</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {projects.map((project) => (
+            <Link href={`/projects/${project.slug}`} key={project.slug}>
+              <ProjectCard title={project.title} />
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
