@@ -14,6 +14,7 @@ export const generateMetadata = (): Metadata => {
 
 const projects = [
   { title: "AI Drug Analysis Pipeline", slug: "ai-drug-pipeline" },
+  { title: "NLP-Powered Scientific Literature Analyser", slug: "nlp-scientific-literature-analyser" },
 ];
 
 export default function ProjectsPage() {
