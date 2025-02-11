@@ -6,8 +6,8 @@ import type { Metadata } from "next";
 // Dynamically set the page metadata
 export const generateMetadata = (): Metadata => {
   return {
-    title: "Home | Sheldon&apos;s AI Portfolio",
-    description: "Explore Sheldon West&apos;s portfolio of cutting-edge AI and machine learning projects.",
+    title: "Home | Sheldon's AI Portfolio",
+    description: "Explore Sheldon West's portfolio of cutting-edge AI and machine learning projects.",
   };
 };
 
