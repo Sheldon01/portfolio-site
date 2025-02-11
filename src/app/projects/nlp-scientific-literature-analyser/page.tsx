@@ -15,7 +15,7 @@ export default function NLPScientificLiteratureAnalyser() {
   return (
     <div className="relative min-h-screen bg-gray-900 text-white overflow-hidden">
       {/* Animated Background */}
-      <AnimatedBackground />
+      <AnimatedBackground speedMultiplier={0.1} />
 
       {/* Page Content */}
       <div className="relative z-10 p-6">

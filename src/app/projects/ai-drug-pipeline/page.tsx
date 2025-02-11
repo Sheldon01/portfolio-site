@@ -14,8 +14,8 @@ export const generateMetadata = (): Metadata => {
 export default function AIDrugPipeline() {
   return (
     <div className="relative min-h-screen bg-gray-900 text-white overflow-hidden">
-      {/* Include the animated background */}
-      <AnimatedBackground />
+      {/* Include the animated background with a slower speed */}
+      <AnimatedBackground speedMultiplier={0.1} />
 
       {/* Page Content */}
       <div className="relative z-10 p-6">
