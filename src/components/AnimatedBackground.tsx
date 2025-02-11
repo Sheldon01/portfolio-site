@@ -4,6 +4,8 @@ import { useEffect, useRef } from "react";
 
 const AnimatedBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const animationFrameId = useRef<number | null>(null); // Track animation frame
+  const particlesRef = useRef<{ x: number; y: number; vx: number; vy: number; radius: number }[]>([]); // Store particles
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -12,6 +14,7 @@ const AnimatedBackground = () => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    // Function to update canvas size dynamically
     const updateCanvasSize = () => {
       const scale = window.devicePixelRatio || 1;
       canvas.width = Math.floor(window.innerWidth * scale);
@@ -21,13 +24,13 @@ const AnimatedBackground = () => {
 
     updateCanvasSize();
 
-    // Dynamic particle count based on screen size
     const width = window.innerWidth;
     const height = window.innerHeight;
-    const particleCount = Math.floor((width * height) / 5000); // Adjust density
+    const particleCount = Math.floor((width * height) / 5000); // Adjust density dynamically
     const maxDist = width < 768 ? 80 : 150; // Reduce connections on mobile
 
-    const particles = Array.from({ length: particleCount }, () => ({
+    // Create particles and store them in ref
+    particlesRef.current = Array.from({ length: particleCount }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
       vx: Math.random() * 0.5 - 0.25,
@@ -39,25 +42,25 @@ const AnimatedBackground = () => {
       ctx.clearRect(0, 0, width, height);
 
       // Draw connections
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
+      for (let i = 0; i < particlesRef.current.length; i++) {
+        for (let j = i + 1; j < particlesRef.current.length; j++) {
           const dist = Math.hypot(
-            particles[i].x - particles[j].x,
-            particles[i].y - particles[j].y
+            particlesRef.current[i].x - particlesRef.current[j].x,
+            particlesRef.current[i].y - particlesRef.current[j].y
           );
           if (dist < maxDist) {
             ctx.beginPath();
             ctx.strokeStyle = `rgba(0, 150, 255, ${1 - dist / maxDist})`;
             ctx.lineWidth = 0.5;
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.moveTo(particlesRef.current[i].x, particlesRef.current[i].y);
+            ctx.lineTo(particlesRef.current[j].x, particlesRef.current[j].y);
             ctx.stroke();
           }
         }
       }
 
       // Draw particles
-      particles.forEach((p) => {
+      particlesRef.current.forEach((p) => {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = "rgba(0, 150, 255, 1)";
@@ -65,7 +68,7 @@ const AnimatedBackground = () => {
       });
 
       // Move particles
-      particles.forEach((p) => {
+      particlesRef.current.forEach((p) => {
         p.x += p.vx;
         p.y += p.vy;
 
@@ -73,17 +76,26 @@ const AnimatedBackground = () => {
         if (p.y < 0 || p.y > height) p.vy *= -1;
       });
 
-      requestAnimationFrame(drawParticles);
+      animationFrameId.current = requestAnimationFrame(drawParticles);
     };
 
+    // Start the animation
     drawParticles();
 
-    // Handle resize
+    // Handle window resizing
     const handleResize = () => {
       updateCanvasSize();
     };
+
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+
+    // Cleanup function: Stop animation & remove event listeners
+    return () => {
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
