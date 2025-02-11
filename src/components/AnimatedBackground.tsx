@@ -12,12 +12,22 @@ const AnimatedBackground = () => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    const updateCanvasSize = () => {
+      const scale = window.devicePixelRatio || 1;
+      canvas.width = Math.floor(window.innerWidth * scale);
+      canvas.height = Math.floor(window.innerHeight * scale);
+      ctx.scale(scale, scale);
+    };
+
+    updateCanvasSize();
+
+    // Dynamic particle count based on screen size
     const width = window.innerWidth;
     const height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
+    const particleCount = Math.floor((width * height) / 5000); // Adjust density
+    const maxDist = width < 768 ? 80 : 150; // Reduce connections on mobile
 
-    const particles = Array.from({ length: 100 }, () => ({
+    const particles = Array.from({ length: particleCount }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
       vx: Math.random() * 0.5 - 0.25,
@@ -35,9 +45,9 @@ const AnimatedBackground = () => {
             particles[i].x - particles[j].x,
             particles[i].y - particles[j].y
           );
-          if (dist < 150) {
+          if (dist < maxDist) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(0, 150, 255, ${1 - dist / 150})`;
+            ctx.strokeStyle = `rgba(0, 150, 255, ${1 - dist / maxDist})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -68,10 +78,9 @@ const AnimatedBackground = () => {
 
     drawParticles();
 
-    // Resize canvas on window resize
+    // Handle resize
     const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      updateCanvasSize();
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
