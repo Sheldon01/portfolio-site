@@ -37,8 +37,7 @@ export default function NLPScientificLiteratureAnalyser() {
               Coming Soon
             </h2>
             <p className="text-lg text-gray-300">
-              Stay tuned for the launch of this project, where cutting-edge NLP
-              will revolutionise scientific research.
+              Stay tuned for the launch of this project.
             </p>
           </div>
         </section>
