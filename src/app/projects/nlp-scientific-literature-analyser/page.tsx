@@ -47,7 +47,7 @@ export default function NLPScientificLiteratureAnalyser() {
         <section className="py-12 text-center">
           <h2 className="text-3xl font-bold mb-4">Check Back Later!</h2>
           <p className="text-gray-400">
-            This exciting project is currently under development.
+            This exciting project is currently under development...
           </p>
         </section>
       </div>
